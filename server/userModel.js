@@ -7,7 +7,13 @@ const bcrypt = require('bcrypt');
 const UserSchema = new Schema({
   username: { type: String, required: true },
   password: {type: String, required: true}, 
-  days: [{ date: String, points: Number }]
+  days: [{ date: {
+    type: String,
+    default: ''
+  }, points: {
+    type: Number,
+    default: 0
+  } }]
 });
 
 

@@ -30,10 +30,8 @@ function BigButton(props) {
 
   const updatePercentagePoints = () => {
     if(isOutside) {
-      console.log('isOutside: ', String(isOutside))
       const totalMinutes = (Date.now() - startTime) / 60000;
       const points = props.uv * totalMinutes + totalPoints;
-      console.log('New points:', points);
       updatePoints(points);
     }
   }
