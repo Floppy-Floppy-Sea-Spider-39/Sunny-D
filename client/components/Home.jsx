@@ -13,6 +13,7 @@ function Home() {
   const [condition, updateCondition] = useState("");
   const [city, updateCity] = useState("");
   const [region, updateRegion] = useState("");
+  const [sunscreenAlert, setSunscreenAlert] = useState("");
 
   useEffect(() => {
     fetch(
@@ -25,11 +26,21 @@ function Home() {
         updateCondition(res.current.condition.icon);
         updateCity(res.location.name);
         updateRegion(res.location.region);
+        //
+        if(res.current.uv > 5) {
+          setSunscreenAlert("Put on sunscreen!");
+        }
       })
       .catch((err) => {
         console.log("Error in weather api call: ", err);
       });
   });
+
+  
+
+
+
+
 
   return (
     <div id="home-page">
@@ -44,6 +55,7 @@ function Home() {
             zipcodeEntry={location.state.zipcode}
             temp={temp}
             uv={uv}
+            sunscreenAlert = {sunscreenAlert}
             condition={condition}
             city={city.toUpperCase()}
             region={region.toUpperCase()}
