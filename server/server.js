@@ -5,12 +5,14 @@ const path = require('path');
 // require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
 let URL
-if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'test'){
   URL = 'mongodb://127.0.0.1:27017'
-} else {
+} else if (process.env.NODE_ENV === 'development') {
+  URL = 'mongodb://127.0.0.1:27017/SunnyD'
+}else {
   URL = 'mongodb+srv://sunnyDTeam:test1234@sunnyd.gewq7u7.mongodb.net/?retryWrites=true&w=majority'
 }
-console.log('URL', URL);
+console.log('node env: ', process.env.NODE_ENV)
 // Data Base
 mongoose.connect(URL, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.once('open', () => {
