@@ -13,7 +13,6 @@ function Home() {
   const [condition, updateCondition] = useState("");
   const [city, updateCity] = useState("");
   const [region, updateRegion] = useState("");
-  const [zipcode, updateZipcode] = useState(0)
 
   function showPosition(position){
     console.log("COORDINATES ----> ",position.coords.latitude, position.coords.longitude)
@@ -77,7 +76,6 @@ function Home() {
           </div>
 
           <WeatherDisplay
-            zipcodeEntry={location.state.zipcode}
             temp={temp}
             uv={uv}
             condition={condition}

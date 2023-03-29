@@ -52,8 +52,8 @@ userController.getUser = (req, res, next) => {
 userController.createUser = async (req, res, next) => {
   console.log('inside createUser middleware')
   console.log('request body --->', req.body)
-  const { username, password, zipcodeEntry } = req.body;
-  const newUser = await User.create({ username: username, password: password, zipcodeEntry: zipcodeEntry });
+  const { username, password } = req.body;
+  const newUser = await User.create({ username: username, password: password });
   console.log('this is newUser ---> ', newUser);
   res.locals.newUser = newUser;
   return next();

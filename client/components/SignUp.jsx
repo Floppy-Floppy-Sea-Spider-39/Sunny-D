@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function SignUp() {
-  const [zipcodeEntry, zipcodeUpdate] = useState(0);
   const [nameEntry, nameUpdate] = useState("");
   const [password, setPassword] = useState('');
 
@@ -18,7 +17,6 @@ function SignUp() {
         body: JSON.stringify({
           username: nameEntry,
           password: password,
-          zipcode: zipcodeEntry
         }),
       })
       .then((data) => console.log(data));
@@ -45,16 +43,9 @@ function SignUp() {
           required
           onChange={(e) => setPassword(e.target.value)}
         ></input>
-        <input
-          id="zipcodeInput"
-          name="zipcode"
-          placeholder="Zip Code"
-          required
-          onChange={(e) => zipcodeUpdate(e.target.value)}
-        ></input>
-            <button id="submitButton" type="submit">
-                Submit
-            </button>
+        <button id="submitButton" type="submit">
+            Submit
+        </button>
       </form>
 
 
