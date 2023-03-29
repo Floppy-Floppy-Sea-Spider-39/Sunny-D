@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 function SignUp() {
-  const [nameEntry, nameUpdate] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState('');
+  const [zipcode, setZipcode] = useState(0)
+  const navigate = useNavigate();
 
   const validateFormFields = () => nameEntry !== '' && password !== '';
 
@@ -19,7 +21,10 @@ function SignUp() {
           password: password,
         }),
       })
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        navigate('/home', { state:{ name: username, password: password }});
+      })
       // TODO: Link use on successful creation to home page
   }
 
@@ -32,7 +37,7 @@ function SignUp() {
           type='text'
           placeholder="username"
           required
-          onChange={(e) => nameUpdate(e.target.value)}
+          onChange={(e) => setUserName(e.target.value)}
         ></input>
 
         <input

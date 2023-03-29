@@ -13,7 +13,7 @@ function Home() {
   const [condition, updateCondition] = useState("");
   const [city, updateCity] = useState("");
   const [region, updateRegion] = useState("");
-
+  const [sunscreenAlert, setSunscreenAlert] = useState("");
   function showPosition(position){
     console.log("COORDINATES ----> ",position.coords.latitude, position.coords.longitude)
     fetch(`https://api.radar.io/v1/geocode/reverse?coordinates=${position.coords.latitude}%2C${position.coords.longitude}`, {
@@ -35,7 +35,11 @@ function Home() {
             updateCondition(res.current.condition.icon);
             updateCity(res.location.name);
             updateRegion(res.location.region);
-          })
+            //
+        if(res.current.uv > 5) {
+          setSunscreenAlert("Put on sunscreen!");
+        }
+      })
           .catch((err) => {
             console.log("Error in weather api call: ", err);
           });
@@ -66,6 +70,12 @@ function Home() {
     //   });
   });
 
+  
+
+
+
+
+
   return (
     <div id="home-page">
       <div id="content">
@@ -78,6 +88,7 @@ function Home() {
           <WeatherDisplay
             temp={temp}
             uv={uv}
+            sunscreenAlert = {sunscreenAlert}
             condition={condition}
             city={city.toUpperCase()}
             region={region.toUpperCase()}

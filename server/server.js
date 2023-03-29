@@ -33,7 +33,8 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
   app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 });
-} else {
+}
+else {
   app.get('/home', (req, res) => res.redirect('/'));
 }
 

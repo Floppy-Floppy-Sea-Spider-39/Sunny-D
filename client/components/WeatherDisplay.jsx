@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 function WeatherDisplay(props) {
+
+  
   return (
     <div id="weatherDisplay">
       <div className="dataCard">
@@ -20,7 +22,8 @@ function WeatherDisplay(props) {
         </div>
         <div className="dataCard">
           <div className="data-card-title">UV Index: </div>
-          <p style={{"fontSize": "26px"}}>{props.uv}</p>
+          <p style={{"fontSize": "26px", position: "absolute"}}>{props.uv}</p>
+          <p> {props.sunscreenAlert}</p>
         </div>
       </div>
   );
