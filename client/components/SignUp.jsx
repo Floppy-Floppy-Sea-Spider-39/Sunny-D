@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 
 function SignUp() {
-  const [zipcodeEntry, zipcodeUpdate] = useState(0);
-  const [nameEntry, nameUpdate] = useState("");
+  const [username, setUserName] = useState("");
   const [password, setPassword] = useState('');
+  const [zipcode, setZipcode] = useState(0)
+  const navigate = useNavigate();
 
   const validateFormFields = () => nameEntry !== '' && password !== '';
 
@@ -18,10 +19,12 @@ function SignUp() {
         body: JSON.stringify({
           username: username,
           password: password,
-          zipcode: zipcode
         }),
       })
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        navigate('/home', { state:{ zipcode: zipcode, name: username, password: password }});
+      })
       // TODO: Link use on successful creation to home page
   }
 
@@ -34,7 +37,7 @@ function SignUp() {
           type='text'
           placeholder="username"
           required
-          onChange={(e) => nameUpdate(e.target.value)}
+          onChange={(e) => setUserName(e.target.value)}
         ></input>
 
         <input
@@ -46,15 +49,16 @@ function SignUp() {
           onChange={(e) => setPassword(e.target.value)}
         ></input>
         <input
-          id="zipcodeInput"
+          id="zipcode"
           name="zipcode"
-          placeholder="Zip Code"
+          placeholder="zipcode"
+          type='text'
           required
-          onChange={(e) => zipcodeUpdate(e.target.value)}
+          onChange={(e) => setZipcode(e.target.value)}
         ></input>
-            <button id="submitButton" type="submit">
-                Submit
-            </button>
+          <button id="submitButton" type="submit">
+              Submit
+          </button>
       </form>
 
 
