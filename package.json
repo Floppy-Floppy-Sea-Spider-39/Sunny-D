@@ -7,7 +7,7 @@
     "test": "concurrently \"NODE_ENV=test nodemon server/server.js\" \"NODE_ENV=test jest --verbose\"",
     "start": "NODE_ENV=production nodemon server/server.js",
     "build": "NODE_ENV=production webpack",
-    "dev": "concurrently \"nodemon server/server.js\" \"NODE_ENV=development webpack-dev-server --open --hot\"",
+    "dev": "concurrently \"NODE_ENV=development nodemon server/server.js\" \"NODE_ENV=development webpack-dev-server --open --hot\"",
     "gulp-prod": "node_modules/.bin/gulp prod",
     "gulp-dev": "node_modules/.bin/gulp dev"
   },

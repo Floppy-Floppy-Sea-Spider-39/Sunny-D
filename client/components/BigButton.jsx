@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Snackbar from '@mui/material/Snackbar';
-import Slide from '@mui/material/Slide';
 import vitaminDQuotes from '../assets/Quotes.js';
+import Notification from './Notification.jsx';
 
 
 function getRandomQuote() {
@@ -29,13 +28,11 @@ function BigButton(props) {
       });
   };
 
-  const getUpdatedPoints = () => {
+  const updatePercentagePoints = () => {
     if(isOutside) {
-      fetch("/api/getPoints")
-        .then((response) => response.json())
-        .then((response) => {
-          updatePoints(response);
-        });
+      const totalMinutes = (Date.now() - startTime) / 60000;
+      const points = props.uv * totalMinutes + totalPoints;
+      updatePoints(points);
     }
   }
 
@@ -44,6 +41,7 @@ function BigButton(props) {
   const [isOutside, switchOutside] = useState(false);
   const [startTime, setStart] = useState(0);
   const [totalPoints, updatePoints] = useState(0);
+  const [intervalId, setIntervalId] = useState(null);
 
   useEffect(() => {
     fetch(`/api/submit/${props.username}`)
@@ -54,10 +52,19 @@ function BigButton(props) {
         } else {
           updatePoints(response.points);
         }
+      })
+      .catch((err) => {
+        console.log('err', err);
       });
+  }, []);
 
-      // setTimeout(getUpdatedPoints, 1000);
-  });
+  useEffect(() => {
+    if(isOutside) {
+      setIntervalId(setInterval(updatePercentagePoints, 100));
+    } else {
+      clearTimeout(intervalId);
+    }
+  }, [isOutside]);
 
   const handleClick = () => {
     if (isOutside === true) {
@@ -66,22 +73,18 @@ function BigButton(props) {
       const points = props.uv * totalMinutes;
 
       addSession(props.username, new Date().toDateString(), points);
+      setMessage(getRandomQuote());
       setIsSnackOpen(true);
     } else {
       setStart(Date.now());
       setIsSnackOpen(false);
-      setMessage(getRandomQuote());
     }
     switchOutside(!isOutside);
   };
 
-  function TransitionDown(props) {
-    return <Slide {...props} direction="down" />;
-  }
-
   return (
     <div id="d-meter">
-      <div>D-Meter: {totalPoints.toFixed(2)}%</div>
+      <div>D-Meter: {typeof totalPoints === 'number' ? totalPoints.toFixed(2): '0.00'}%</div>
       <div id="progress-container">
         <div id="loading" style={{ width: `${totalPoints}%` }}></div>
       </div>
@@ -91,14 +94,7 @@ function BigButton(props) {
           ? "YOU'RE OUTSIDE! GO INSIDE?"
           : "YOU'RE INSIDE! GO OUTSIDE?"}
       </button>
-      <Snackbar
-        anchorOrigin={{vertical: 'bottom', horizontal: 'center'}}
-        open={isOutside}
-        TransitionComponent={TransitionDown}
-        autoHideDuration={5000}
-        message={message}
-        onClose={() => console.log('Active')}
-      />
+      <Notification isSnackOpen={isSnackOpen} message={message} />
     </div>
   );
 }
