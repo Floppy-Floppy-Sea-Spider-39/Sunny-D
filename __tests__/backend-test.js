@@ -40,7 +40,6 @@ describe('Route integration', () => {
               .send({username:'testusername', password: 'testpassword'})
               .expect(200)
               .then(response => {
-                console.log('new user signup test: ', response)
                 expect(response._body.username).toEqual('testusername');
                 expect(response._body.password).not.toEqual('testpassword');
                 // expect(response.zipcodeEntry).toEqual(12345)
@@ -55,39 +54,60 @@ describe('Route integration', () => {
             )
             it('should have a new user in the database', async () => {
                 const db = await User.find({}).exec();
-                console.log('whole database: ', db);
                 const user = await User.findOne({username:'testusername'}).exec();
-                console.log(user);
                 expect(user.username).toEqual('testusername');
                 expect(user.password).not.toEqual('testpassword');
                 // expect(user.zipcodeEntry).toEqual(12345);
 
-            }
-            )
+            })
         })
 
         //test route paths to /api/verify
 
+        describe('/verify', () => {
+          it('adds new user to DB', () => request(server) 
+            .post('/api/signup')
+            .send({username: 'testuser', password: 'testpassword'})
+          )
+          
+          it('responds with a 200 status', () => request(server)
+            .post('/api/verify')
+            .send({username:'testuser', password: 'testpassword'})
+            .expect(200)
+            )
+          
+          it('should have a matching username in the database', async () => {
+            const db = await User.find({}).exec();
+            const user = await User.findOne({username: 'testuser'}).exec();
+            // .post('/api/verify')
+            expect(user.username).toEqual('testuser');
+            expect(user.password).not.toEqual('testpassword');
+            
+          })
 
+        })
 
 
         // //testing route paths to /api/submit
-        // describe('/submit', () => {
-        //     it('responds with the total points', () => request(server)
-        //     .post('/api/submit')
-        //     .send({username: 'testname', date: 'testdate', points: 10})
-        //     .then(res => {
-        //         console.log('here is the response ---> ', res.body)
-        //         expect(res.body).should.have.property('username')
-                
-        //     })
-        // //     .catch((err) =>{
-        // //       console.log(err)
-        // // })
-        //     )
-          
-        // })
-    })
 
-        
-})
+        describe('/submit', () => {
+          const user = User.create({username: 'testname', password: 'password'})
+
+            // it('creates new user', async() => {
+            // })
+            
+            it('responds with the total points', () => request(server)
+              .post('/api/submit')
+              .send({username: 'testname', date: 'March 23 2023', points: 10})
+              .expect(200)
+              .then(response => {
+                console.log('here is response ---> ', response)
+                // expect(response._body.username).toEqual('testname')
+                // expect(response._body.date).toEqual('testdate')
+                expect(response._body).toEqual(10)
+              })
+            )
+            })
+        })
+    })
+// })
