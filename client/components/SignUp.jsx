@@ -4,7 +4,6 @@ import { Link, useNavigate} from "react-router-dom";
 function SignUp() {
   const [username, setUserName] = useState("");
   const [password, setPassword] = useState('');
-  const [zipcode, setZipcode] = useState(0)
   const navigate = useNavigate();
 
   const validateFormFields = () => nameEntry !== '' && password !== '';
@@ -17,7 +16,7 @@ function SignUp() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          username: nameEntry,
+          username: username,
           password: password,
         }),
       })
