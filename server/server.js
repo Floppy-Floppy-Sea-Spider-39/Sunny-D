@@ -2,6 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const userController = require('./controllers/userController');
 const path = require('path');
+const cookieController = require('./controllers/cookieController')
+// const Home = require ('./client/components/Home.jsx')
 // require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
 let URL
@@ -38,6 +40,13 @@ else {
   app.get('/home', (req, res) => res.redirect('/'));
 }
 
+// app.use(express.static(path.join(__dirname, '../client')))
+// app.get('/home', (req,res) => {
+//   res.render(Home);
+// })
+
+// app.get('/home', (req, res) => res.sendStatus(200));
+
 api.get('/submit/:username', userController.getUser, (req, res)=>{
   return res.status(200).json(res.locals.data);
 })
@@ -48,13 +57,14 @@ api.post('/submit', userController.updateUser, (req, res) => {
   return res.status(200).json(res.locals.totalPoints);
 });
 
-api.post('/signup', userController.createUser, (req, res) => {
-  return res.status(200).json(res.locals.newUser);
-});
-
-api.post('/verify', userController.logIn, userController.getUser, (req, res) => {
+api.post('/signup', userController.createUser, cookieController.setSSIDCookie, (req, res) => {
   return res.status(200).json(res.locals.user);
 });
+
+api.post('/verify', userController.logIn, userController.getUser, cookieController.setSSIDCookie, (req, res) => {
+  return res.status(200).json(res.locals.user);
+});
+
 // Unknown route handler
 app.use((req, res) => res.sendStatus(404));
 
