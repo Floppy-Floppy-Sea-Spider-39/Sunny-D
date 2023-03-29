@@ -4,7 +4,7 @@ const userController = require('./controllers/userController');
 const path = require('path');
 // require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
-let URL
+let URL;
 if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development'){
   URL = 'mongodb://127.0.0.1:27017'
 } else {
@@ -31,7 +31,8 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
   app.get('/', (req, res) => {
     return res.status(200).sendFile(path.join(__dirname, '../index.html'))
 });
-} else {
+}
+else {
   app.get('/home', (req, res) => res.redirect('/'));
 }
 
