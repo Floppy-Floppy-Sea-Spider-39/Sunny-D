@@ -101,7 +101,7 @@ describe('Route integration', () => {
               .send({username: 'testname', date: 'March 23 2023', points: 10})
               .expect(200)
               .then(response => {
-                console.log('here is response ---> ', response)
+                // console.log('here is response ---> ', response)
                 // expect(response._body.username).toEqual('testname')
                 // expect(response._body.date).toEqual('testdate')
                 expect(response._body).toEqual(10)

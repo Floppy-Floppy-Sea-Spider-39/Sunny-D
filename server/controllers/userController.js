@@ -8,27 +8,27 @@ userController.updateUser = async (req, res, next) => {
     const user = await User.findOne({ username });
     const index = user.days.length - 1;
 
-    console.log('before first conditional');
+    // console.log('before first conditional');
 
       if (user.days.length === 0 || user.days[index].date !== date) { 
-        console.log('in first conditional')
+        // console.log('in first conditional')
         const update = await User.findOneAndUpdate(
           { username },
           { $push: { days: { date: date, points: points } } },
           { new: true }
         );
-        console.log('after findOneAndUpdate');
+        // console.log('after findOneAndUpdate');
       }
-      console.log('this is username ---->', username)
-      console.log('this is date ---->', date)
-      console.log('this is points ---->', points)
+      // console.log('this is username ---->', username)
+      // console.log('this is date ---->', date)
+      // console.log('this is points ---->', points)
       
-      console.log('this is days ------>', user.days)
+      // console.log('this is days ------>', user.days)
 
       if (user.days.length !== 0) {
         const currentDate = user.days[index];
         const newPoints = currentDate.points + points;
-        console.log('in second conditional')
+        // console.log('in second conditional')
         const update = await User.findOneAndUpdate(
           { username },
           { $set: { [`days.${index}.points`]: newPoints } },
@@ -37,12 +37,12 @@ userController.updateUser = async (req, res, next) => {
         res.locals.totalPoints = update.days[index].points;
         return next();
       } else {
-        console.log('in second conditional else statement')
+        // console.log('in second conditional else statement')
         res.locals.totalPoints = points;
         return next();
       }
     } catch (err) {
-        console.log('in catch error')
+        // console.log('in catch error')
         return next({
         log: 'Error in userController.updateUser: ' + err,
         status: 418,
@@ -63,12 +63,12 @@ userController.getUser = async (req, res, next) => {
 };
 
 userController.createUser = async (req, res, next) => {
-  console.log('inside createUser middleware')
-  console.log('request body --->', req.body)
+  // console.log('inside createUser middleware')
+  // console.log('request body --->', req.body)
   const { username, password } = req.body;
-  const newUser = await User.create({ username: username, password: password });
-  console.log('this is newUser ---> ', newUser);
-  res.locals.newUser = newUser;
+  const user = await User.create({ username: username, password: password });
+  console.log('this is user ---> ', user);
+  res.locals.user = user;
   return next();
 };
 
