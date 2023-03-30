@@ -52,11 +52,15 @@ userController.updateUser = async (req, res, next) => {
 };
 
 
+
 userController.getUser = async (req, res, next) => {
   const { username } = req.params;
   await User.findOne({ username: username })
     .then((data) => {
-      if (data) res.locals.data = data.days.pop();
+      if (data) {
+        res.locals.user = data
+        res.locals.data = data.days[data.days.length-1];
+      }
       else res.locals.data = 0;
       return next();
     });
@@ -65,8 +69,8 @@ userController.getUser = async (req, res, next) => {
 userController.createUser = async (req, res, next) => {
   console.log('inside createUser middleware')
   console.log('request body --->', req.body)
-  const { username, password } = req.body;
-  const newUser = await User.create({ username: username, password: password });
+  const { username, password, days } = req.body;
+  const newUser = await User.create({ username: username, password: password, days: days });
   console.log('this is newUser ---> ', newUser);
   res.locals.newUser = newUser;
   return next();
@@ -94,7 +98,17 @@ userController.logIn = async (req, res, next) => {
     });
 };
 
-
+userController.addDay = async(req, res, next) => {
+  const { username } = req.params;
+  const { date } = req.body;
+  const update = await User.findOneAndUpdate(
+    { username },
+    { $push: { days: { date: date, points: 0 } } },
+    { new: true }
+  );
+  console.log('ADDED NEW DAY', update)
+  return next()
+}
 
 
 module.exports = userController;
