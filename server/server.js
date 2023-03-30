@@ -48,7 +48,7 @@ else {
 // app.get('/home', (req, res) => res.sendStatus(200));
 
 api.get('/submit/:username', userController.getUser, (req, res)=>{
-  return res.status(200).json(res.locals.data);
+  return res.status(200).json(res.locals);
 })
 
 // Record Button Click Route
@@ -64,6 +64,10 @@ api.post('/signup', userController.createUser, cookieController.setSSIDCookie, (
 api.post('/verify', userController.logIn, userController.getUser, cookieController.setSSIDCookie, (req, res) => {
   return res.status(200).json(res.locals.user);
 });
+
+api.post('/addday/:username', userController.addDay, (req, res) => {
+  return res.status(200).json()
+})
 
 // Unknown route handler
 app.use((req, res) => res.sendStatus(404));

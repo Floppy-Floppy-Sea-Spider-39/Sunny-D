@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import vitaminDQuotes from '../assets/Quotes.js';
 import Notification from './Notification.jsx';
 
@@ -36,6 +36,27 @@ function BigButton(props) {
     }
   }
 
+  const verifyDayExists = (username, date) => {
+    console.log('verifying day exists...')
+    fetch(`/api/submit/${username}`)
+      .then(response => response.json())
+      .then(response => {
+        if (response.user.days[response.user.days.length-1].date !== date){
+          updatePoints(0)
+          console.log('ADDING NEW DAY');
+          fetch(`/api/addday/${username}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ date: date }),
+          })
+        } else {
+          updatePoints(response.user.days[response.user.days.length-1].points)
+        }
+      })
+  }
+
   const [isSnackOpen, setIsSnackOpen] = useState(false);
   const [message, setMessage] = useState(getRandomQuote())
   const [isOutside, switchOutside] = useState(false);
@@ -43,20 +64,30 @@ function BigButton(props) {
   const [totalPoints, updatePoints] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
 
+  const dataFetchedRef = useRef(false)
+
+  // useEffect(() => {
+  //   fetch(`/api/submit/${props.username}`)
+  //     .then(response => response.json())
+  //     .then(response => {
+  //       if (!response) {
+  //         updatePoints(0);
+  //       } else {
+  //         console.log("GETUSER RESPONSE ---> ",response)
+  //         updatePoints(response.data.points);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log('err', err);
+  //     });
+  // }, []);
+
   useEffect(() => {
-    fetch(`/api/submit/${props.username}`)
-      .then((response) => response.json())
-      .then((response) => {
-        if (!response) {
-          updatePoints(0);
-        } else {
-          updatePoints(response.points);
-        }
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
-  }, []);
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
+    verifyDayExists(props.username, new Date().toDateString())
+
+  }, [])
 
   useEffect(() => {
     if(isOutside) {
@@ -78,6 +109,9 @@ function BigButton(props) {
     } else {
       setStart(Date.now());
       setIsSnackOpen(false);
+      //make sure current day exists in DB
+      // verifyDayExists(props.username, new Date().toDateString())
+
     }
     switchOutside(!isOutside);
   };
