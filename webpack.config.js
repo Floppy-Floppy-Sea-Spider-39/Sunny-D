@@ -33,6 +33,7 @@ module.exports = {
                 ]
             },
             {
+                exclude: /images/,
                 test: /\.(png|jpe?g|gif)$/i,
                     use: [
                     {

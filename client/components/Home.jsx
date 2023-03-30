@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import BigButton from "./BigButton.jsx";
 import WeatherDisplay from "./WeatherDisplay.jsx";
+import Button from "@mui/material/Button"
+
 
 
 function Home() {
+
+  const navigate = useNavigate();
   const location = useLocation();
 
   const [temp, updateTemp] = useState(0);
@@ -96,6 +100,10 @@ function Home() {
         </div>
 
         <BigButton username={location.state.name} uv={uv} />
+        <div className="achievementButton">
+          <Button className="achievementButton" variant="contained" onClick={() => navigate('/achievements', {state: {name: location.state.name}})}> ☀️ Achievements ☀️</Button>
+        </div>
+        
       </div>
       <div id="footer">
         <div id="developer">

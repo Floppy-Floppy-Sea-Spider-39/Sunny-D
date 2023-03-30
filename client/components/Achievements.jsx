@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ImageList from '@mui/material/ImageList';
 import Button from '@mui/material/Button';
 import Badge from './Badge.jsx';
@@ -68,9 +69,8 @@ const badges = [
 
 // https://mui.com/material-ui/react-image-list/
 function Achievements(props) {
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const navigate = useNavigate();
+    const location = useLocation();
     return (
         <>
             <div className="achievementContainer">
@@ -81,9 +81,9 @@ function Achievements(props) {
                 <ImageList sx={{ width: 360, height: 650 }} style={{alignItems: 'center' }} cols={3}>
                     {badges.map((item) => (<Badge key={item.img} details={item}/>))}
                 </ImageList>
-                <button>
-                ☀️ Back to the sunny goodness ☀️
-                </button>
+                <Button variant="contained" onClick={() => navigate('/home', { state:{ name: location.state.name }})}>
+                    ☀️ Back to the sunny goodness ☀️
+                </Button>
             </div>
         </>
         
