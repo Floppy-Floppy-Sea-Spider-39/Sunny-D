@@ -52,6 +52,7 @@ function Home() {
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(showPosition)
+    console.log(location)
     
     // fetch(
     //   `http://api.weatherapi.com/v1/current.json?key=3b98cf2d582f413d83c172329232503&q=${zipcode}`

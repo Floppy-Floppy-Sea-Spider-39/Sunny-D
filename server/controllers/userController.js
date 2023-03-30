@@ -72,7 +72,7 @@ userController.createUser = async (req, res, next) => {
   const { username, password, days } = req.body;
   const newUser = await User.create({ username: username, password: password, days: days });
   console.log('this is newUser ---> ', newUser);
-  res.locals.newUser = newUser;
+  res.locals.user = newUser;
   return next();
 };
 
