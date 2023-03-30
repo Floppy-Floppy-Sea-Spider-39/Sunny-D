@@ -31,6 +31,15 @@ module.exports = {
                     'css-loader',
                     'sass-loader',
                 ]
+            },
+            {
+                exclude: /images/,
+                test: /\.(png|jpe?g|gif)$/i,
+                    use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
             }
         ]
     },
