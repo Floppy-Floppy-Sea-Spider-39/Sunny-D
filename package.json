@@ -17,14 +17,25 @@
   },
   "author": "",
   "license": "ISC",
+  "transform": {
+    "\\.js$": "<rootDir>/node_modules/babel-jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "@testing-library/jest-dom/extend-expect"
+    ]
+  },
   "bugs": {
     "url": "https://github.com/Pink-Fairy-Armadillo-39/SunnyD/issues"
   },
   "homepage": "https://github.com/Pink-Fairy-Armadillo-39/SunnyD#readme",
   "devDependencies": {
     "@babel/core": "^7.21.3",
+    "@babel/plugin-transform-async-to-generator": "^7.20.7",
     "@babel/preset-env": "^7.20.2",
     "@babel/preset-react": "^7.18.6",
+    "@testing-library/react": "^14.0.0",
     "babel-loader": "^9.1.2",
     "babel-preset-env": "^1.7.0",
     "css-loader": "^6.7.3",
@@ -64,6 +75,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
+    "react-test-renderer": "^18.2.0",
     "regenerator-runtime": "^0.13.11"
   }
 }
