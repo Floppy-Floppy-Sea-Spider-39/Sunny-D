@@ -105,9 +105,31 @@ describe('Route integration', () => {
                 // expect(response._body.username).toEqual('testname')
                 // expect(response._body.date).toEqual('testdate')
                 expect(response._body).toEqual(10)
+                
               })
             )
             })
+          
+
+          describe('/addday', () => {
+            const addDayUser = User.create({username: 'addDayUser', password: 'addDayPassword'})
+
+            it ('should not have any days before middleware runs', async () => {
+              const user = await User.findOne({username: 'addDayUser'}).exec()
+              console.log(user)
+              expect(!user.days.length)
+            })
+            it ('should add the current date and 0 points to the days array', () => request(server)
+              .post(`/api/addday/addDayUser`)
+              .send({date: new Date().toDateString()})
+              .then(async () => {
+                const user = await User.findOne({username: 'addDayUser'}).exec()
+                console.log('addDayUser after adding day', user)
+                expect(user.days.length).toEqual(1)
+                expect(user.days[0].date).toEqual(new Date().toDateString())
+                expect(user.days[0].points).toEqual(0)
+              })
+            )
         })
     })
-// })
+})
