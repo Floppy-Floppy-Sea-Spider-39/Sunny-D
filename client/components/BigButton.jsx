@@ -41,7 +41,7 @@ function BigButton(props) {
     fetch(`/api/submit/${username}`)
       .then(response => response.json())
       .then(response => {
-        if (response.user.days[response.user.days.length-1].date !== date){
+        if (!response.user.days.length || response.user.days[response.user.days.length-1].date !== date){
           updatePoints(0)
           console.log('ADDING NEW DAY');
           fetch(`/api/addday/${username}`, {
