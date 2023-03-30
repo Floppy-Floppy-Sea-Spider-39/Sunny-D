@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import Tooltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import Badge from './Badge.jsx';
 
@@ -20,18 +17,6 @@ import sunset from '../assets/sunset.png';
 import tan from '../assets/tan.png';
 import tired from '../assets/tired.png';
 import vitamin_d from '../assets/vitamin-d.png';
-
-const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 300,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
 
 const badges = [
     {
@@ -96,9 +81,9 @@ function Achievements(props) {
                 <ImageList sx={{ width: 360, height: 650 }} style={{alignItems: 'center' }} cols={3}>
                     {badges.map((item) => (<Badge key={item.img} details={item}/>))}
                 </ImageList>
-                <Button variant="contained">
+                <button>
                 ☀️ Back to the sunny goodness ☀️
-                </Button>
+                </button>
             </div>
         </>
         
