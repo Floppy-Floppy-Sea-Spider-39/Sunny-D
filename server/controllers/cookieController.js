@@ -1,6 +1,5 @@
+const Cookies = require ('js-cookie');
 const cookieController = {};
-
-
 
 cookieController.setSSIDCookie = async (req, res, next) => {
 
@@ -28,15 +27,20 @@ cookieController.setSSIDCookie = async (req, res, next) => {
 };
 
 cookieController.checkCookie = async (req, res, next) => {
-    const cookie = Cookie.get('loggedIn');
+  try {
+    const cookie = Cookies.get('loggedIn');
     if (cookie) {
-        next()
-    } else {
-
+      return next();
     }
+    else {
+      console.log('there is an error in cookieController.checkCookie');
+      return next();
+    }
+  }
+  catch (err){
+    return next(err);
+  }
 }
-
-
 
 
 

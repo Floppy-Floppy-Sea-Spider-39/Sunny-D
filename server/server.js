@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
 });
 }
 else {
-  app.get('/home', (req, res) => res.redirect('/'));
+  app.get('/home', (req, res) => res.status(200).sendFile(path.join(__dirname, '../index.html')));
 }
 
 // app.use(express.static(path.join(__dirname, '../client')))
