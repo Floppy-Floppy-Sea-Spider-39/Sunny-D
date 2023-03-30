@@ -18,6 +18,7 @@ function SignUp() {
         body: JSON.stringify({
           username: username,
           password: password,
+          days: [{date: new Date().toDateString(), points: 0}]
         }),
       })
       .then((data) => {
