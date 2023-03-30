@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import vitaminDQuotes from '../assets/Quotes.js';
 import Notification from './Notification.jsx';
 
@@ -51,6 +51,8 @@ function BigButton(props) {
             },
             body: JSON.stringify({ date: date }),
           })
+        } else {
+          updatePoints(response.user.days[response.user.days.length-1].points)
         }
       })
   }
@@ -62,23 +64,27 @@ function BigButton(props) {
   const [totalPoints, updatePoints] = useState(0);
   const [intervalId, setIntervalId] = useState(null);
 
-  useEffect(() => {
-    fetch(`/api/submit/${props.username}`)
-      .then(response => response.json())
-      .then(response => {
-        if (!response) {
-          updatePoints(0);
-        } else {
-          console.log("GETUSER RESPONSE ---> ",response)
-          updatePoints(response.data.points);
-        }
-      })
-      .catch((err) => {
-        console.log('err', err);
-      });
-  }, []);
+  const dataFetchedRef = useRef(false)
+
+  // useEffect(() => {
+  //   fetch(`/api/submit/${props.username}`)
+  //     .then(response => response.json())
+  //     .then(response => {
+  //       if (!response) {
+  //         updatePoints(0);
+  //       } else {
+  //         console.log("GETUSER RESPONSE ---> ",response)
+  //         updatePoints(response.data.points);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log('err', err);
+  //     });
+  // }, []);
 
   useEffect(() => {
+    if (dataFetchedRef.current) return;
+    dataFetchedRef.current = true;
     verifyDayExists(props.username, new Date().toDateString())
 
   }, [])
