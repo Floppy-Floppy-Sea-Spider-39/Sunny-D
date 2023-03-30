@@ -2,13 +2,13 @@ import React from 'React';
 import {render, screen, waitFor } from '@testing-library/react';
 import { UserEvent } from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import Quotes from './client/assets/Quotes';
-import BigButton from './components/BigButton';
-import Home from './components/Home';
-import Login from './components/Login';
-import Notification from './components/Notification';
-import SignUp from './components/SignUp';
-import WeatherDisplay from './components/WeatherDisplay';
+// import Quotes from '../client/assets/Quotes.jsx';
+import BigButton from '../client/components/BigButton.jsx';
+import Home from '../client/components/Home.jsx';
+import Login from '../client/components/Login.jsx';
+import Notification from '../client/components/Notification.jsx';
+import SignUp from '../client/components/SignUp.jsx';
+import WeatherDisplay from '../client/components/WeatherDisplay.jsx';
 
 
 
@@ -18,8 +18,14 @@ describe('Unit Testing React Components', () => {
     beforeAll(() => {
         let text = render(<BigButton {...props} />);
       });
+      //renders notification on click
+      test ('Renders notification on click', () => {
 
-
+      })
+      //d-meter updates; check width at render, click button twice, check width again
+      test ('D-meter updates', () => {
+        
+      })
   })
   
   describe('Home', () => {
@@ -34,6 +40,7 @@ describe('Unit Testing React Components', () => {
     beforeAll(() => {
         let text = render(<Login {...props} />);
       });
+      //check to see if there are 2 input bars in screen
 
 
   })
@@ -62,15 +69,37 @@ describe('Unit Testing React Components', () => {
     beforeAll(() => {
         let text = render(<Signup {...props} />);
       });
-
-
+    //check to ensure there are 2 input bars on screen
+    test('Signup page has 2 input bars', () => {
+      const inputNum = screen.getAllByRole(input)
+      expect(inputNum.length).toBe(2);
+    })
   })
   
   describe('WeatherDisplay', () => {
+    const props = {
+      temp: 79, 
+      condition: 'sunny',
+      uv: 6
+  }
     beforeAll(() => {
         let text = render(<WeatherDisplay {...props} />);
       });
 
+      // test for temperature render
+      test('Temperature appears after login', () => {
+        expect(screen.queryByText(props.temp).toEqual(79))
+      })
+
+      // test for UV index rendering
+      test('UV index appears after login', () => {
+        expect(screen.queryByText(props.uv).toEqual(6))
+      })
+      
+      // test for sunscreen alert to render
+
+      
+      // test for condition of weather to change
 
   })
 
