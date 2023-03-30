@@ -21,7 +21,7 @@
     "\\.js$": "<rootDir>/node_modules/babel-jest"
   },
   "jest": {
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "@testing-library/jest-dom/extend-expect"
     ]
