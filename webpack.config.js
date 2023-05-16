@@ -31,6 +31,15 @@ module.exports = {
                     'css-loader',
                     'sass-loader',
                 ]
+            },
+            {
+                exclude: /images/,
+                test: /\.(png|jpe?g|gif)$/i,
+                    use: [
+                    {
+                        loader: 'file-loader',
+                    },
+                ],
             }
         ]
     },
@@ -46,7 +55,8 @@ module.exports = {
           directory: path.resolve(__dirname, 'build'),
         },
         proxy: {
-          '/trips': 'http://localhost:3000/',
+          '/api/*': 'http://localhost:3000/',
+          '/home': 'http://localhost:3000/'
         },
 				compress: true,
 				port: 8080,
