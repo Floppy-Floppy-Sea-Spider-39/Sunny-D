@@ -1,7 +1,9 @@
+
 ![sunlyte](./client/assets/Sunlyte-header.png)
 
 <div align='center'>
   
+ 
 
 <a href='https://github.com/oslabs-beta/Watchdogs/blob/main/LICENSE'>
 <img src='https://img.shields.io/github/license/Sunlyte-39/Sunlyte?style=for-the-badge'>
