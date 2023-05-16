@@ -70,7 +70,7 @@ function Login() {
       </button>
       <button id='signupButton'>
         <Link to="/signup">
-          Signup for the Sunny D
+          Signup for Sunlyte
         </Link>
       </button>
     </div>

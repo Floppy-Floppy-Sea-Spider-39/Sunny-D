@@ -44,13 +44,10 @@ body {
 }
 
 #loginButton .sunnyD-img {
-  width: 20vh;
-  height: 11vh;
+  height: 20vh;
+  width: 20vh;  
   background-image: url("../../images/logo.png");
   background-size: 100% 100%;
-  border: none;
-  background-color: transparent;
-  margin-bottom: 2.3rem;
 }
 
 #loginButton {
@@ -60,7 +57,31 @@ body {
 #loginButton:hover{
   cursor: pointer;
 }
-
+#signupButton {
+  background-color: white;
+  text-align: center;
+  color: black;
+  margin: 18px 0 10px 0;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0px 0px 6px rgba(0, 146, 255, 1);
+  width: 12.8rem;
+  padding: 8px 20px;
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}
+#submitButton {
+  background-color: rgba(0, 145, 255, 0.563);
+  text-align: center;
+  color: rgb(69, 69, 69);
+  margin: 18px 0 10px 0;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0px 0px 6px rgba(0, 146, 255, 1);
+  padding: 8px 20px;
+}
 #home-page {
   display: flex;
   flex-direction: column;
