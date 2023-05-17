@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const userController = require('./controllers/userController');
 const path = require('path');
 const cookieController = require('./controllers/cookieController')
+const dotenv = require('dotenv').config();
+
 // const Home = require ('./client/components/Home.jsx')
 // require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 
@@ -12,7 +14,7 @@ if (process.env.NODE_ENV === 'test'){
 } else if (process.env.NODE_ENV === 'development') {
   URL = 'mongodb://127.0.0.1:27017/SunnyD'
 }else {
-  URL = 'mongodb+srv://sunnyDTeam:test1234@sunnyd.gewq7u7.mongodb.net/?retryWrites=true&w=majority'
+  URL = process.env.MONGO_URI
 }
 console.log('node env: ', process.env.NODE_ENV)
 // Data Base
